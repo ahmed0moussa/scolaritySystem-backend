@@ -3,7 +3,9 @@ package com.myserv.api.rh.services;
 import com.myserv.api.rh.configfile.FileStorageProperties;
 import com.myserv.api.rh.configfile.ImageStorageProperties;
 import com.myserv.api.rh.model.Entretien;
+import com.myserv.api.rh.model.Etudiant;
 import com.myserv.api.rh.repository.EntretienRepository;
+import com.myserv.api.rh.repository.EtudiantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,7 +26,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileImageService {
     @Autowired
-    private EntretienRepository entretienRepository;
+    private EtudiantRepository etudiantRepository;
     private final Path imageUploadLocation;
     private final Path imageDownloadLocation = Paths.get("./uploads/Image");
 
@@ -53,11 +55,11 @@ public class FileImageService {
         }
     }
 
-    public String uploadImage(String infoCanditatId, MultipartFile image) {
+    public String uploadImage(String etudiantId, MultipartFile image) {
         // Renormalize the file name
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-        /* Entretien entretien = entretienRepository.findById(entretienId).orElseThrow();*/
 
+        Etudiant etudiant= etudiantRepository.findById(etudiantId).orElseThrow();
         try {
             // Verify if the file's name  is containing invalid characters
             if (fileName.contains("..")) {
@@ -68,8 +70,10 @@ public class FileImageService {
 
             Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            String imageUploadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/entretien/downloadFile/").path(fileName).toUriString();
-            /*entretien.setFile(imageUploadUrl);*/
+            String imageUploadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("/uploads/Image/").path(fileName).toUriString();
+
+            etudiant.setImage(imageUploadUrl);
+            etudiantRepository.save(etudiant);
 
 
 

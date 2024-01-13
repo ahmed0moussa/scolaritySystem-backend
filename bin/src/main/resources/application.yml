@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/
+      database: scolarity
+      auto-index-creation: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+jwtSecret: obUDzHwWI9vbRJmqop8HxFINlOhdUQQC3NCrU16DWd4
+jwtExpirationMs: 86400000
+
+file:
+  uploadDir: ./uploads/Cv
+image:
+  ImageDir: ./uploads/Image
+
+server:
+  port: 8080

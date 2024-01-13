@@ -20,5 +20,6 @@ public class MenuItem {
     private String link;
     private List<Item> subItems;
     private boolean active= false;
+    private boolean title=false;
 
 }

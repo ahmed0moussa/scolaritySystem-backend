@@ -18,5 +18,17 @@ file:
 image:
   ImageDir: ./uploads/Image
 
+app:
+  file:
+    storage:
+      mapping:
+        cv:
+          file:///c:/a-project/scolaritySystem/scolaritySystem-backend/uploads/Cv
+
+        Image:
+          file:///c:/a-project/scolaritySystem/scolaritySystem-backend/uploads/Image
+
+
+
 server:
   port: 8080
